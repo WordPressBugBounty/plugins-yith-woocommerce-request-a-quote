@@ -2,14 +2,15 @@
 /**
  * Plugin Name: YITH Request a Quote for WooCommerce
  * Plugin URI: https://yithemes.com/themes/plugins/yith-woocommerce-request-a-quote
- * Version: 2.36.0
+ * Version: 2.37.0
  * Author: YITH
  * Author URI: https://yithemes.com/
  * Description: <code><strong>YITH Request a Quote for WooCommerce</strong></code> lets your customers ask for an estimate of a list of products they are interested in. It allows hiding prices and/or the "Add to cart" button so that your customers can request a quote on every product page. <a href="https://yithemes.com/" target="_blank">Get more plugins for your e-commerce shop on <strong>YITH</strong></a>.
  * Text Domain: yith-woocommerce-request-a-quote
  * Domain Path: /languages/
- * WC requires at least: 9.0.0
- * WC tested up to: 9.2.0
+ * WC requires at least: 9.3.0
+ * WC tested up to: 9.5.0
+ * Requires Plugins: woocommerce
  *
  * @package YITH\RequestAQuote
  * @since   1.0.3
@@ -35,13 +36,10 @@ if ( ! defined( 'YITH_YWRAQ_DIR' ) ) {
 	define( 'YITH_YWRAQ_DIR', plugin_dir_path( __FILE__ ) );
 }
 
-
-/* Plugin Framework Version Check */
-if ( ! function_exists( 'yit_maybe_plugin_fw_loader' ) && file_exists( YITH_YWRAQ_DIR . 'plugin-fw/init.php' ) ) {
-	require_once YITH_YWRAQ_DIR . 'plugin-fw/init.php';
+// Plugin Framework Loader.
+if ( file_exists( plugin_dir_path( __FILE__ ) . 'plugin-fw/init.php' ) ) {
+    require_once plugin_dir_path( __FILE__ ) . 'plugin-fw/init.php';
 }
-yit_maybe_plugin_fw_loader( YITH_YWRAQ_DIR );
-
 
 // This version can't be activate if premium version is active.
 if ( defined( 'YITH_YWRAQ_PREMIUM' ) ) {
@@ -77,7 +75,7 @@ register_activation_hook( __FILE__, 'yith_plugin_registration_hook' );
 if ( defined( 'YITH_YWRAQ_VERSION' ) ) {
 	return;
 } else {
-	define( 'YITH_YWRAQ_VERSION', '2.36.0' );
+	define( 'YITH_YWRAQ_VERSION', '2.37.0' );
 }
 
 if ( ! defined( 'YITH_YWRAQ_FREE_INIT' ) ) {
@@ -146,10 +144,11 @@ function yith_ywraq_constructor() {
 	}
 
 	// Load YWCM text domain ___________________________________.
-	load_plugin_textdomain( 'yith-woocommerce-request-a-quote', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	if ( function_exists( 'yith_plugin_fw_load_plugin_textdomain' ) ) {
+		yith_plugin_fw_load_plugin_textdomain( 'yith-woocommerce-request-a-quote', basename( dirname( __FILE__ ) ) . '/languages' );
+	}
 
 	// Load required classes and functions.
-
 	if ( ! class_exists( 'WC_Session' ) ) {
 		include_once WC()->plugin_path() . '/includes/abstracts/abstract-wc-session.php';
 	}

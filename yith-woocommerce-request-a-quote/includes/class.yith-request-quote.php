@@ -64,11 +64,7 @@ if ( ! class_exists( 'YITH_Request_Quote' ) ) {
 		 * @since  1.0.0
 		 */
 		public function __construct() {
-
 			add_action( 'init', array( $this, 'start_session' ) );
-
-			/* plugin. */
-			add_action( 'plugins_loaded', array( $this, 'plugin_fw_loader' ), 15 );
 
 			/* ajax action. */
 			add_action( 'wp_ajax_yith_ywraq_action', array( $this, 'ajax' ) );
@@ -125,22 +121,6 @@ if ( ! class_exists( 'YITH_Request_Quote' ) ) {
 
 			$this->get_raq_for_session();
 			isset( $this->session_class ) && $this->session_class->set_customer_session_cookie( true );
-		}
-
-		/**
-		 * Load YIT Plugin Framework
-		 *
-		 * @since  1.0.0
-		 * @return void
-		 */
-		public function plugin_fw_loader() {
-			if ( ! defined( 'YIT_CORE_PLUGIN' ) ) {
-				global $plugin_fw_data;
-				if ( ! empty( $plugin_fw_data ) ) {
-					$plugin_fw_file = array_shift( $plugin_fw_data );
-					require_once $plugin_fw_file;
-				}
-			}
 		}
 
 		/**

@@ -64,7 +64,7 @@ if ( count( $raq_content ) === 0 ) :
 						?>
 					</td>
 
-					<td class="product-name" data-title="Product">
+					<td class="product-name" data-title="<?php esc_attr_e( 'Product', 'yith-woocommerce-request-a-quote' ); ?>">
 						<?php
 						$product_title = $_product->get_title();
 						if ( $_product->get_sku() !== '' && get_option( 'ywraq_show_sku' ) === 'yes' ) {
@@ -129,7 +129,7 @@ if ( count( $raq_content ) === 0 ) :
 					</td>
 
 
-					<td class="product-quantity" data-title="Quantity">
+					<td class="product-quantity" data-title="<?php esc_attr_e( 'Quantity', 'yith-woocommerce-request-a-quote' ); ?>">
 						<?php
 						$product_quantity = woocommerce_quantity_input(
 							array(
