@@ -227,7 +227,7 @@ if ( ! class_exists( 'YITH_YWRAQ_Frontend' ) ) {
 				$product                      = wc_get_product( $post->ID );
 				$show_button_near_add_to_cart = get_option( 'ywraq_show_button_near_add_to_cart', 'no' );
 
-				if ( yith_plugin_fw_is_true( $show_button_near_add_to_cart ) && $product->is_in_stock() && $product->get_price() !== '' ) {
+				if ( yith_plugin_fw_is_true( $show_button_near_add_to_cart ) && $product instanceof WC_Product && $product->is_in_stock() && $product->get_price() !== '' ) {
 					add_action( 'woocommerce_after_add_to_cart_button', array( $this, 'add_button_single_page' ), 10 );
 				} else {
 					add_filter( 'render_block_woocommerce/add-to-cart-form', array( $this, 'add_button_single_block' ), 10, 2 );
