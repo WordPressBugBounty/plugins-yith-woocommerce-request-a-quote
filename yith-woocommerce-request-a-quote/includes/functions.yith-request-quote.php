@@ -584,3 +584,20 @@ if ( ! function_exists( 'yith_ywraq_render_button' ) ) {
 		wc_get_template( $template_button, $args, '', YITH_YWRAQ_TEMPLATE_PATH . '/' );
 	}
 }
+
+function yith_ywraq_get_dummy_product() {
+	$product = new WC_Product();
+	$product->set_name( 'Test Product' );
+	$product->set_id( 0 );
+	$product->set_price( 10 );
+	return $product;
+}
+
+function yith_ywraq_get_product( $product_id ) {
+	$is_email_preview = has_filter( 'woocommerce_is_email_preview' );
+	if ( empty( $product_id ) && $is_email_preview ) {
+		return yith_ywraq_get_dummy_product();
+	} else {
+		return wc_get_product( $product_id );
+	}
+}

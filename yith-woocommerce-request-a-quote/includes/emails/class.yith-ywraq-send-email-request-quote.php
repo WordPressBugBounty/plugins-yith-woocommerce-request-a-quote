@@ -72,6 +72,39 @@ if ( ! class_exists( 'YITH_YWRAQ_Send_Email_Request_Quote' ) ) {
 		}
 
 		/**
+		 * Check if the request is for the email preview
+		 */
+		protected function is_email_preview() {
+			return has_filter( 'woocommerce_is_email_preview' );
+		}
+
+		protected function get_dummy_raq() {
+			return array(
+				'user_email'  => 'yith@example.com',
+				'user_name'   => 'John Doe',
+				'raq_content' => array(
+					md5( 0 ) => array(
+						'product_id' => 0,
+						'quantity'   => 1,
+					),
+				),
+			);
+		}
+
+		/**
+		 * Get the quote data to be used
+		 *
+		 * @return array
+		 */
+		public function get_raq() {
+			if ( $this->is_email_preview() ) {
+				wc_load_cart();
+				$this->raq = $this->get_dummy_raq();
+			}
+			return $this->raq;
+		}
+
+		/**
 		 * Method triggered to send email
 		 *
 		 * @param   int $args  parameter list.
@@ -132,7 +165,7 @@ if ( ! class_exists( 'YITH_YWRAQ_Send_Email_Request_Quote' ) ) {
 			wc_get_template(
 				$this->template_html,
 				array(
-					'raq_data'      => $this->raq,
+					'raq_data'      => $this->get_raq(),
 					'email_heading' => $this->get_heading(),
 					'sent_to_admin' => true,
 					'plain_text'    => false,
@@ -156,7 +189,7 @@ if ( ! class_exists( 'YITH_YWRAQ_Send_Email_Request_Quote' ) ) {
 			wc_get_template(
 				$this->template_plain,
 				array(
-					'raq_data'      => $this->raq,
+					'raq_data'      => $this->get_raq(),
 					'email_heading' => $this->get_heading(),
 					'sent_to_admin' => true,
 					'plain_text'    => false,

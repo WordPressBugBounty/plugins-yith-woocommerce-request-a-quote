@@ -40,13 +40,13 @@
 	<?php
 	if ( ! empty( $raq_data['raq_content'] ) ) :
 		foreach ( $raq_data['raq_content'] as $item ) :
-			$_product = isset( $item['variation_id'] ) ? wc_get_product( $item['variation_id'] ) : wc_get_product( $item['product_id'] );
+			$_product = isset( $item['variation_id'] ) ? yith_ywraq_get_product( $item['variation_id'] ) : yith_ywraq_get_product( $item['product_id'] );
 			if ( ! $_product ) {
 				continue;
 			}
 
 			$product_admin_link = '';
-			$posttype_object    = get_post_type_object( get_post( $_product->get_id() )->post_type );
+			$posttype_object    = get_post_type_object( get_post( $_product->get_id() )->post_type ?? 'product' );
 			if ( ( $posttype_object ) && ( $posttype_object->_edit_link ) ) {
 				$product_admin_link = admin_url( sprintf( $posttype_object->_edit_link . '&action=edit', $_product->get_id() ) );
 			}
