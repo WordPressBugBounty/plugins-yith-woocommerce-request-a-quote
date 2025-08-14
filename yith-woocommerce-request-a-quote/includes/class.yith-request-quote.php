@@ -42,6 +42,13 @@ if ( ! class_exists( 'YITH_Request_Quote' ) ) {
 		 */
 		public $raq_content = array();
 
+		/**
+		 * List of variations
+		 *
+		 * @var array
+		 */
+		public $raq_variations = array();
+
 
 		/**
 		 * Returns single instance of the class

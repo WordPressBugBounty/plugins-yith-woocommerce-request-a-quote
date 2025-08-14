@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the YITH Request a Quote for WooCommerce package.
 msgid ""
 msgstr ""
-"Project-Id-Version: YITH Request a Quote for WooCommerce 2.42.0\n"
+"Project-Id-Version: YITH Request a Quote for WooCommerce 2.43.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/yith-woocommerce-request-a-quote\n"
-"POT-Creation-Date: 2025-07-03 12:21:33+00:00\n"
+"POT-Creation-Date: 2025-08-14 13:17:58+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -114,35 +114,35 @@ msgstr ""
 msgid "Your list is empty"
 msgstr ""
 
-#: includes/class.yith-request-quote.php:275
+#: includes/class.yith-request-quote.php:282
 #: includes/functions.yith-request-quote.php:477
 msgid "Product already in the list."
 msgstr ""
 
-#: includes/class.yith-request-quote.php:431
+#: includes/class.yith-request-quote.php:438
 msgid "Error occurred while adding product to Request a Quote list."
 msgstr ""
 
-#: includes/class.yith-request-quote.php:533
+#: includes/class.yith-request-quote.php:540
 msgid "Please enter a name"
 msgstr ""
 
-#: includes/class.yith-request-quote.php:538
+#: includes/class.yith-request-quote.php:545
 msgid "Please enter a valid email"
 msgstr ""
 
-#: includes/class.yith-request-quote.php:542
+#: includes/class.yith-request-quote.php:549
 msgid "Your list is empty, add products to the list to send a request"
 msgstr ""
 
-#: includes/class.yith-request-quote.php:672
+#: includes/class.yith-request-quote.php:679
 #. translators: placeholder of missing attributes.
 msgid "%s is a required field"
 msgid_plural "%s are required fields"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class.yith-request-quote.php:676
+#: includes/class.yith-request-quote.php:683
 msgid "Please choose product options&hellip;"
 msgstr ""
 
