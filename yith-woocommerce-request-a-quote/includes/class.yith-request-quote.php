@@ -13,7 +13,6 @@ if ( ! defined( 'ABSPATH' ) || ! defined( 'YITH_YWRAQ_VERSION' ) ) {
 }
 
 if ( ! class_exists( 'YITH_Request_Quote' ) ) {
-
 	/**
 	 * Class YITH_Request_Quote
 	 */
@@ -76,6 +75,7 @@ if ( ! class_exists( 'YITH_Request_Quote' ) ) {
 			/* ajax action. */
 			add_action( 'wp_ajax_yith_ywraq_action', array( $this, 'ajax' ) );
 			add_action( 'wp_ajax_nopriv_yith_ywraq_action', array( $this, 'ajax' ) );
+			add_filter( 'ywraq_ajax_add_item_is_valid', array( $this, 'add_item_is_valid' ), 10, 2 );
 
 			/* session settings. */
 			add_action( 'wp_loaded', array( $this, 'init' ) ); // Get raq after WP and plugins are loaded.
@@ -432,7 +432,17 @@ if ( ! class_exists( 'YITH_Request_Quote' ) ) {
 			$product_id         = ( isset( $posted['product_id'] ) && is_numeric( $posted['product_id'] ) ) ? (int) $posted['product_id'] : false;
 			$is_valid_variation = isset( $posted['variation_id'] ) ? ! ( ( empty( $posted['variation_id'] ) || ! is_numeric( $posted['variation_id'] ) ) ) : true;
 
-			$is_valid = $is_valid_variation;
+			/**
+			 * APPLY_FILTERS: ywraq_ajax_add_item_is_valid
+			 *
+			 * Filter if the item to add is valid.
+			 *
+			 * @param boolean $is_valid   Check if the item to add is valid.
+			 * @param int     $product_id Product id.
+			 *
+			 * @return boolean
+			 */
+			$is_valid = apply_filters( 'ywraq_ajax_add_item_is_valid', $product_id && $is_valid_variation, $product_id );
 
 			if ( ! $is_valid ) {
 				$errors[] = __( 'Error occurred while adding product to Request a Quote list.', 'yith-woocommerce-request-a-quote' );
@@ -456,6 +466,23 @@ if ( ! class_exists( 'YITH_Request_Quote' ) ) {
 					'rqa_url'      => $this->get_raq_page_url(),
 				)
 			);
+		}
+
+		/**
+		 * Prevent non-authenticated users from adding non-visible products to quote
+		 *
+		 * @param bool $is_valid Product is valid for quote.
+		 * @param int  $product_id The product ID.
+		 * @return bool
+		 */
+		public function add_item_is_valid( $is_valid, $product_id ) {
+			if ( $is_valid && $product_id ) {
+				if ( get_current_user_id() === 0 ) {
+					$product  = wc_get_product( $product_id );
+					$is_valid = $product instanceof WC_Product && $product->is_visible();
+				}
+			}
+			return $is_valid;
 		}
 
 		/**
